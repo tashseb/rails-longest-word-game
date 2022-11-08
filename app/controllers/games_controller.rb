@@ -8,9 +8,11 @@ class GamesController < ApplicationController
     @word_api = JSON.parse(html)['found']
     @letters = params[:letters]
     @match = match?(@letters, @word)
+    session[:current_points] += 1 if @score
   end
 
   def new
+    session[:current_points] = 0 unless session[:current_points]
     @letters = (0...10).map { ('A'..'Z').to_a[rand(26)] }
   end
 
